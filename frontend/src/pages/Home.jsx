@@ -7,7 +7,9 @@ import { BsInfoCircle } from 'react-icons/bs';
 import { MdOutlineAddBox, MdOutlineDelete } from 'react-icons/md';
 import BooksTable from '../components/home/BooksTable';
 import BooksCard from '../components/home/BooksCard';
-
+import * as dotenv from 'dotenv';
+const host = import.meta.env.VITE_HOST;
+const serverPort = import.meta.env.VITE_SERVER_PORT;
 const Home = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -16,13 +18,15 @@ const Home = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get('http://localhost:5555/books')
+      .get(`http://${host}:${serverPort}/books`)
       .then((response) => {
         setBooks(response.data.data);
         setLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        console.log(`http://${host}:${serverPort}/books`)
+        console.log(typeof serverPort);
         setLoading(false);
       });
   }, []);

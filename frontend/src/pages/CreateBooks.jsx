@@ -4,7 +4,8 @@ import Spinner from '../components/Spinner';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-
+// import * as dotenv from 'dotenv';
+// dotenv.config();
 const CreateBooks = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
@@ -12,7 +13,8 @@ const CreateBooks = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-
+const host = import.meta.env.VITE_HOST
+const serverPort = Number(import.meta.env.VITE_SERVER_PORT)
   const handleSaveBook = () => {
     const data = {
       title,
@@ -21,7 +23,7 @@ const CreateBooks = () => {
     };
     setLoading(true);
     axios
-      .post('http://localhost:5555/books', data)
+      .post(`http://${host}:${serverPort}/books`, data)
       .then(() => {
         setLoading(false);
         enqueueSnackbar('Book Created successfully', { variant: 'success' });
@@ -29,6 +31,7 @@ const CreateBooks = () => {
       })
       .catch((error) => {
         setLoading(false);
+      console.log(`http://${host}:${serverPort}/books`)
         // alert('An error happened. Please Chack console');
         enqueueSnackbar('Error', { variant: 'error' });
         console.log(error);
