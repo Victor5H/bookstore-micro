@@ -1,4 +1,4 @@
-version: '3.3'
+
 services:
   db:
     image: mongo
@@ -14,7 +14,7 @@ services:
     - "27017:27017"
   
   frontend:
-    build: iahs5/book-store-client:1.3
+    image: iahs5/book-store-client:1.3
     container_name: frontend
     depends_on: 
     - "backend"
@@ -26,7 +26,7 @@ services:
     - "3005:3005"
 
   backend:
-    build: iahs5/book-store-server:1.0
+    image: iahs5/book-store-server:1.0
     container_name: backend
     ports:
     - "5555:5555"
